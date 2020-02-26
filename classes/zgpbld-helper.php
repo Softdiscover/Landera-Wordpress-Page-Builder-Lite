@@ -284,21 +284,11 @@ class Zgpbld_Form_Helper {
     }
     
 
+
+
     public static function data_encrypt($string, $key) {
         $output = '';
-        /*   if(function_exists("mcrypt_encrypt")) { */
-        if (0) {
-            $output = rtrim(
-                    base64_encode(
-                            mcrypt_encrypt(
-                                    MCRYPT_RIJNDAEL_256, $key, $string, MCRYPT_MODE_ECB, mcrypt_create_iv(
-                                            mcrypt_get_iv_size(
-                                                    MCRYPT_RIJNDAEL_256, MCRYPT_MODE_ECB
-                                            ), MCRYPT_RAND)
-                            )
-                    ), "\0"
-            );
-        } else {
+       
             $result = '';
             for ($i = 0; $i < strlen($string); $i++) {
                 $char = substr($string, $i, 1);
@@ -307,26 +297,16 @@ class Zgpbld_Form_Helper {
                 $result .= $char;
             }
             $output = base64_encode($result);
-        }
+        
 
 
         return $output;
     }
+ 
 
     public static function data_decrypt($string, $key) {
         $output = '';
-        /* if(function_exists("mcrypt_encrypt")) { */
-        if (0) {
-            $output = rtrim(
-                    mcrypt_decrypt(
-                            MCRYPT_RIJNDAEL_256, $key, base64_decode($string), MCRYPT_MODE_ECB, mcrypt_create_iv(
-                                    mcrypt_get_iv_size(
-                                            MCRYPT_RIJNDAEL_256, MCRYPT_MODE_ECB
-                                    ), MCRYPT_RAND
-                            )
-                    ), "\0"
-            );
-        } else {
+    
             $result = '';
             $string = base64_decode($string);
 
@@ -337,7 +317,7 @@ class Zgpbld_Form_Helper {
                 $result .= $char;
             }
             $output = $result;
-        }
+        
 
         return $output;
     }

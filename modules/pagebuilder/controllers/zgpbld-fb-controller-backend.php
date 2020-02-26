@@ -288,7 +288,7 @@ class Zgpbld_Fb_Controller_Backend extends Zgpbld_Base_Module {
         wp_enqueue_media();
 
         //md5
-        wp_enqueue_script('sfdcgb-md5', ZGPBLD_URL . '/assets/backend/js/md5.js');
+        //wp_enqueue_script('sfdcgb-md5', ZGPBLD_URL . '/assets/backend/js/md5.js');
             
         //retina
         wp_enqueue_script('sfdcgb-retina', ZGPBLD_URL . '/assets/backend/js/retina.js');

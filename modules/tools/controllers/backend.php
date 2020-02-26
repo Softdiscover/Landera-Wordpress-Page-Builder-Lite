@@ -98,16 +98,22 @@ class Zgpb_tools_Controller_Backend extends Zgpbld_Base_Module {
      */
     
     public function ajax_tools_importimg_process() {
+
         check_ajax_referer('zgpb_ajax_nonce', 'zgpb_security');
         
         //enable unlimited time
         set_time_limit(0);
+  
+ $opt_extra = (isset($_POST['extra']) && $_POST['extra']) ? Zgpbld_Form_Helper::sanitizeInput_html($_POST['extra']) : '';
+
+parse_str($opt_extra, $extra_vars);
+
+        $opt_importurl = (isset($extra_vars['lnda_tools_replaceurl_path']) && $extra_vars['lnda_tools_replaceurl_path']) ? Zgpbld_Form_Helper::sanitizeInput_html($extra_vars['lnda_tools_replaceurl_path']) : '';
+        $opt_exclude = (isset($extra_vars['lnda_tools_replaceurl_exclude']) && $extra_vars['lnda_tools_replaceurl_exclude']) ? Zgpbld_Form_Helper::sanitizeInput_html($extra_vars['lnda_tools_replaceurl_exclude']) : '';
+        $opt_option = (isset($extra_vars['lnda_tools_replaceurl_option']) && $extra_vars['lnda_tools_replaceurl_option']) ? Zgpbld_Form_Helper::sanitizeInput_html($extra_vars['lnda_tools_replaceurl_option']) : '';
         
-        
-        $opt_importurl = (isset($_POST['lnda_tools_replaceurl_path']) && $_POST['lnda_tools_replaceurl_path']) ? Zgpbld_Form_Helper::sanitizeInput_html($_POST['lnda_tools_replaceurl_path']) : '';
-        $opt_exclude = (isset($_POST['lnda_tools_replaceurl_exclude']) && $_POST['lnda_tools_replaceurl_exclude']) ? Zgpbld_Form_Helper::sanitizeInput_html($_POST['lnda_tools_replaceurl_exclude']) : '';
-        $opt_option = (isset($_POST['option']) && $_POST['option']) ? Zgpbld_Form_Helper::sanitizeInput_html($_POST['option']) : '';
-                    
+
+
         //check excluded urls
         
         if(!empty($opt_exclude)){
@@ -139,27 +145,21 @@ class Zgpb_tools_Controller_Backend extends Zgpbld_Base_Module {
         
         $this->current_post_id = $post_id;
         
-        $encrypted = (isset($_POST['encrypted']) && $_POST['encrypted']) ? $_POST['encrypted'] : '';
-        
+        $lnd_data = (isset($_POST['lnd_data']) && $_POST['lnd_data']) ? urldecode($_POST['lnd_data']) : '';
+        $lnd_data2 = (isset($lnd_data) && $lnd_data) ? array_map(array('Zgpbld_Form_Helper', 'sanitizeRecursive_html'), json_decode($lnd_data, true)) : array();
+
         if (version_compare(PHP_VERSION, '5.6', '<')) {
             echo 'you need to have version higher than 5.6, my current version: ' . PHP_VERSION . "\n";
             die();
         }
+       
         
-        //decryption start
-        $key = pack("H*", "0123456789abcdef0123456789abcdef");
-        $iv =  pack("H*", "abcdef9876543210abcdef9876543210");
-        $encrypted = base64_decode($encrypted);
-        $decrypt_string = mcrypt_decrypt(MCRYPT_RIJNDAEL_128, $key, $encrypted, MCRYPT_MODE_CBC, $iv);
-        
-        //remove strange code
-        $filtered_rareString=Zgpbld_Form_Helper::substrAfter($decrypt_string, "}");
-        $decrypt_string = str_replace($filtered_rareString,'',$decrypt_string);
-        
+
+ 
         
         $json = array();
         $json['success'] = 1;
-         if (Zgpbld_Form_Helper::is_JSON($decrypt_string)) {
+         if (Zgpbld_Form_Helper::is_JSON($lnd_data)) {
            
         } else {
             $error = json_last_error_msg();
@@ -168,7 +168,7 @@ class Zgpb_tools_Controller_Backend extends Zgpbld_Base_Module {
             $json['error'] ="Not valid JSON string ($error)";
         }
        
-        $zgpb_data_core = (isset($decrypt_string) && $decrypt_string) ? json_decode($decrypt_string, true) : array();
+        $zgpb_data_core = (!empty($lnd_data2) && $lnd_data2) ? $lnd_data2 : array();
                     
         $this->ajax_tools_importimg_process_2($zgpb_data_core);
         
@@ -386,7 +386,14 @@ class Zgpb_tools_Controller_Backend extends Zgpbld_Base_Module {
     
     public function tools_replaceurl_replace($tmp_text) {
         
-        $opt_replace = (isset($_POST['lnda_tools_replaceurl_rpl']) && $_POST['lnda_tools_replaceurl_rpl']) ? Zgpbld_Form_Helper::sanitizeInput_html($_POST['lnda_tools_replaceurl_rpl']) : '';
+ $opt_extra = (isset($_POST['extra']) && $_POST['extra']) ? Zgpbld_Form_Helper::sanitizeInput_html($_POST['extra']) : '';
+
+parse_str($opt_extra, $extra_vars);
+ 
+
+        $opt_replace = (isset($extra_vars['lnda_tools_replaceurl_rpl']) && $extra_vars['lnda_tools_replaceurl_rpl']) ? Zgpbld_Form_Helper::sanitizeInput_html($extra_vars['lnda_tools_replaceurl_rpl']) : '';
+
+
         $opt_search = $this->tool_replaceurl_urlpath;
         
         $tmp_data=$this->tool_replaceurl_urlsmodified;
@@ -487,6 +494,7 @@ class Zgpb_tools_Controller_Backend extends Zgpbld_Base_Module {
                 if($tmp_response===false){
                     //image does not exist.
                     $tmp_data[$key]['error']='1';
+                   
                 }else{
                     $tmp_data[$key]['new']=$tmp_response;
                     

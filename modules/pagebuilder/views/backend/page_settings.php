@@ -94,47 +94,10 @@ ob_start();
 
         </div>
     </div>
-    <div class="sfdc-row">
-        <div class="sfdc-col-lg-12">
-            <div class="sfdc-panel sfdc-panel-default">
-                <div class="sfdc-panel-heading">
-                    <i class="fa fa-list-alt"></i> <?php echo __('System Information', 'zgpbd_admin'); ?>
-                </div>
-                <!-- /.panel-heading -->
-                <div class="sfdc-panel-body">
-                   
-                        <div id="uiform-settings-inner-body">
-                            <div class="sfdc-form-group">
-                                <label class=" sfdc-col-sm-2 sfdc-control-label"><?php echo __('PHP mcrypt Extension', 'zgpbd_admin'); ?></label>
-                                <div class="sfdc-col-sm-10">
-<?php 
-                                   if(function_exists('mcrypt_encrypt')) {
-  ?> 
-<div class="sfdc-alert sfdc-alert-success" role="alert">
-  <?php echo __('mcrypt is installed', 'zgpbd_admin'); ?>
-</div>
- <?php 
-} else {
-    ?>
-<div class="sfdc-alert sfdc-alert-danger" role="alert">
-  <?php echo __('mcrypt is not installed. if this php module is not installed, landera will not work', 'zgpbd_admin'); ?>
-</div>
- <?php 
-}
-?>
-                                </div>
-                            </div>
+
+ 
 
 
-                        </div>
-                     
-                  
-                </div>
-                <!-- /.panel-body -->
-            </div>
-
-        </div>
-    </div>
 </div>
 
 
