@@ -7,7 +7,7 @@ Tags: page builder, designer, drag and drop, visual composer, landing page, cust
 Requires at least: 3.6
 Tested up to: 4.9.6
 Requires PHP: 5.3
-Stable tag: 2.2
+Stable tag: 2.2.3
 
 Landera is a drag and drop page builder which makes you to design live any layout that you can imagine.
 
@@ -312,13 +312,13 @@ https://www.youtube.com/watch?v=mS5kTzfpwIE&w=532&rel=0
 
 = 2 =
 * First release
-= 2.2 =
+= 2.2.3 =
 * minor changes
 
 == Upgrade Notice ==
 
 = 2 =
 * First release
-= 2.2 =
+= 2.2.3 =
 * minor changes
 

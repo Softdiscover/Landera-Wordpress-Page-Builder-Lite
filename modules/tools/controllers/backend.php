@@ -146,7 +146,8 @@ parse_str($opt_extra, $extra_vars);
         $this->current_post_id = $post_id;
         
         $lnd_data = (isset($_POST['lnd_data']) && $_POST['lnd_data']) ? urldecode($_POST['lnd_data']) : '';
-        $lnd_data2 = (isset($lnd_data) && $lnd_data) ? array_map(array('Zgpbld_Form_Helper', 'sanitizeRecursive_html'), json_decode($lnd_data, true)) : array();
+       
+        $lnd_data2 = (!empty($lnd_data) && $lnd_data) ? array_map(array('Zgpbld_Form_Helper', 'sanitizeRecursive_html'), json_decode($lnd_data, true)) : array();
 
         if (version_compare(PHP_VERSION, '5.6', '<')) {
             echo 'you need to have version higher than 5.6, my current version: ' . PHP_VERSION . "\n";
@@ -194,7 +195,7 @@ parse_str($opt_extra, $extra_vars);
                 switch (intval($value['type'])) {
                     case 8:
                         //html
-                        $tmp_text=urldecode($value['input1']['text']);
+                        $tmp_text=html_entity_decode(urldecode($value['input1']['text']), ENT_COMPAT, 'UTF-8');
                         $this->tool_rplurl_curtext=$tmp_text;
                         break;
                     default:

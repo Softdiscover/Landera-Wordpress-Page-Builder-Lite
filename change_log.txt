@@ -1,4 +1,7 @@
-version 2.2
+version 2.2.3
+[new] - issue with html field
+----------------------------------------------------------------------------------------
+version 2.2.1
 [new] - tooltip issue on modal box
 [fixed] - save content on draft button
 ----------------------------------------------------------------------------------------

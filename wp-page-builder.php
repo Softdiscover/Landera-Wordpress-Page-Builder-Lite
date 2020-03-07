@@ -3,7 +3,7 @@
  * Plugin Name: WP Page Builder
  * Plugin URI: https://landera.softdiscover.com
  * Description:  Landera - Wordpress Page Builder makes you build pages in few steps.
- * Version: 2.2
+ * Version: 2.2.3
  * Author: SoftDiscover
  * Author URI: http://www.softdiscover.com
  */
@@ -29,7 +29,7 @@ if (!class_exists('ZigaPageBuilder')) {
          * @var string
          * @since 1.0
          */
-        public $version = '2.2';
+        public $version = '2.2.3';
 
         /**
          * The minimal required version of WordPress for this plug-in to function correctly.
