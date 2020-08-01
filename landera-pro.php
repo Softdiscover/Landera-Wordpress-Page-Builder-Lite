@@ -1,9 +1,9 @@
 <?php
 /*
- * Plugin Name: WP Page Builder
+ * Plugin Name: Landera - Wordpress Page Builder PRO
  * Plugin URI: https://landera.softdiscover.com
  * Description:  Landera - Wordpress Page Builder makes you build pages in few steps.
- * Version: 2.2.3
+ * Version: 2.2.4
  * Author: SoftDiscover
  * Author URI: http://www.softdiscover.com
  */
@@ -29,7 +29,7 @@ if (!class_exists('ZigaPageBuilder')) {
          * @var string
          * @since 1.0
          */
-        public $version = '2.2.3';
+        public $version = '2.2.4';
 
         /**
          * The minimal required version of WordPress for this plug-in to function correctly.
@@ -159,8 +159,8 @@ if (!class_exists('ZigaPageBuilder')) {
             $this->define('ZGPBLD_LIBS', ZGPBLD_DIR . '/libraries');
             
             
-            $this->define('ZGPBLD_LITE', 1);
-            $this->define('ZGPBLD_DEBUG', 0);
+            $this->define('ZGPBLD_LITE', 0);
+            $this->define('ZGPBLD_DEBUG', 1);
             if (ZGPBLD_DEBUG == 1) {
                error_reporting(E_ALL);
                ini_set('memory_limit','-1');

@@ -19,7 +19,9 @@ return array(
 				"importimg" => __('Import external images to local','zgth_admin'),
 				"reveal" => __('Reveal url','zgth_admin'),
                                 "remove" => __('Remove links and keep anchor text','zgth_admin'),
-                                "replace" => __('Replace String','zgth_admin')
+                                "replace" => __('Replace String','zgth_admin'),
+                                "remqueryurl" => __('Remove query string from urls','zgth_admin'),
+                                "remlink" => __('Remove link','zgth_admin')
                                 
 			),
 			"type" => "radiobutton",
@@ -59,7 +61,7 @@ return array(
                         "group_order" =>1,
                         "sec_order" =>1
 		),
-            
+    
         ),
         'buttons'=>array(
               array(

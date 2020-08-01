@@ -100,10 +100,10 @@ class Zgpbld_Fb_Controller_Frontend extends Zgpbld_Base_Module {
         //admin
 
         wp_register_script(
-                ZGPBLD_PREFIX . 'admin', ZGPBLD_URL . '/assets/frontend/js/js.js', array('jquery', 'wp-util'), ZGPBLD_VERSION, true
+                ZGPBLD_PREFIX . 'admin', ZGPBLD_URL . '/assets/frontend/js/js.php', array('jquery', 'wp-util'), ZGPBLD_VERSION, true
         );
         wp_register_style(
-                ZGPBLD_PREFIX . 'admin', ZGPBLD_URL . '/assets/frontend/css/css.css', array(), ZGPBLD_VERSION, 'all'
+                ZGPBLD_PREFIX . 'admin', ZGPBLD_URL . '/assets/frontend/css/css.php', array(), ZGPBLD_VERSION, 'all'
         );
 
             

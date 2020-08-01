@@ -58,9 +58,14 @@ $zgpb(function($)
                         case 'importimg':
                         case 'reveal':
                         case 'remove':
+                        case 'remlink':
                              $('#lnda_tools_replaceurl_path_wrapper').show();
                              $('#lnda_tools_replaceurl_rpl_wrapper').hide();
-                            break;    
+                            break;
+                          case 'remqueryurl':
+                            $('#lnda_tools_replaceurl_path_wrapper').hide();
+                             $('#lnda_tools_replaceurl_rpl_wrapper').hide();
+                            break;       
                         case 'replace':
                             $('#lnda_tools_replaceurl_path_wrapper').show();
                             $('#lnda_tools_replaceurl_rpl_wrapper').show();

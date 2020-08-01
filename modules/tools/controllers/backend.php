@@ -44,6 +44,7 @@ class Zgpb_tools_Controller_Backend extends Zgpbld_Base_Module {
     public $tool_replaceurl_option='';
     public $tool_replaceurl_exclude='';
     public $tool_rplurl_curtext='';
+    public $tool_skip_searchpath=false;
     public $current_post_id='';
     
 
@@ -196,12 +197,13 @@ parse_str($opt_extra, $extra_vars);
                     case 8:
                         //html
                         $tmp_text=html_entity_decode(urldecode($value['input1']['text']), ENT_COMPAT, 'UTF-8');
+                          
                         $this->tool_rplurl_curtext=$tmp_text;
                         break;
                     default:
                         break;
                 }
-                    
+                
                 $this->ajax_tools_replaceurl_search($tmp_text);
                 
                 
@@ -257,11 +259,31 @@ parse_str($opt_extra, $extra_vars);
     
     public function ajax_tools_replaceurl_search($tmp_text) {
         
-                    
+                   $this->tool_skip_searchpath=false;
+  switch ($this->tool_replaceurl_option) {
+                    case 'importimg':
+                       
+                    break;
+                    case 'reveal':
+                       
+                        break;
+                    case 'remove':
+                        
+                        break;
+                    case 'replace':
+                        
+                        break;
+                    case 'remqueryurl':
+                          $this->tool_skip_searchpath=true;
+                        break;
+                    default:
+                        break;
+                }
+
         $urltoreplace = $this->tool_replaceurl_urlpath;
         
-        preg_match_all('#\bhttps?://[^,\s()<>]+(?:\([\w\d]+\)|([^,[:punct:]\s]|/))#',$tmp_text,$a);
-       
+        preg_match_all('#\bhttps?:\/\/[^,\s()<>]+(?:\([\w\d]+\)|([^,[:punct:]\s]|\/))#',$tmp_text,$a);
+
         $tmp_unique_groupurl=array();
         
         $tmp_store=array();
@@ -275,7 +297,7 @@ parse_str($opt_extra, $extra_vars);
                        if($this->tools_replaceurl_checkexclude($value2)){
                                 
                         }else{
-                           if( !empty($urltoreplace) && strpos( $value2, $urltoreplace ) !== false ) {
+                           if( (!empty($urltoreplace) && strpos( $value2, $urltoreplace ) !== false) || $this->tool_skip_searchpath) {
                                     $tmp_urlfound[]=array(
                                           'old'=>$value2, 
                                           'new'=>''
@@ -296,7 +318,7 @@ parse_str($opt_extra, $extra_vars);
         
        $this->tool_replaceurl_urlsleft=$tmp_store; 
        $this->tool_replaceurl_urlsmodified=$tmp_urlfound;
-       
+    
        switch ($this->tool_replaceurl_option) {
                     case 'importimg':
                         $this->tools_replaceurl_extractimg($tmp_text);
@@ -310,15 +332,105 @@ parse_str($opt_extra, $extra_vars);
                         break;
                     case 'replace':
                         $this->tools_replaceurl_replace($tmp_text);
-                        
-                        
                         break;
+                    case 'remqueryurl':
+
+                        $this->tools_replaceurl_removequery($tmp_text);
+                        break;
+                    case 'remlink':
+
+                        $this->tools_replaceurl_removeonlylink($tmp_text);
+                        break;    
+
                     default:
                         break;
                 }
                 
     }
     
+
+public function tools_replaceurl_removeonlylink($tmp_text){
+          $tmp_data=$this->tool_replaceurl_urlsmodified;
+    /*get all links with parameters*/    
+    /* $regex='/<a\s+href\s*=\s*"[^"]*?([^"\\?]*)(\\?[^"]*)[^"]*"(?:[^>]+)?>([^<]+)<\/a>/i';*/
+  
+$tmp_store_mod=array();
+        foreach ($tmp_data as $key => $value) {
+            
+            
+
+            if(!empty($value['old']) ){
+                $escapedUrl = preg_quote($value['old'], '/');
+
+        $regex = '#<a\s+href\s*=\s*"[^"]*?' . $escapedUrl . '[^"]*"(?:[^>]+)?>(.*)<\/a>#';
+ 
+   preg_match($regex,$tmp_text,$matches);
+
+        if(!empty($matches)){
+          $tmp_store_mod[$key]['old']=htmlentities($matches[0]);
+            $tmp_store_mod[$key]['new']='';
+            //$tmp_text=str_replace($matches[0],'',$tmp_text);
+            $tmp_text=preg_replace($regex, '', $tmp_text);
+        } 
+
+ 
+                        
+                    
+             }else{
+                 //image does not exist.
+                    $tmp_store_mod[$key]['error']='1';
+              } 
+
+        }
+       
+    
+    
+        $this->tool_replaceurl_urlsmodified = $tmp_store_mod;
+        $this->tool_rplurl_curtext = $tmp_text;
+         
+    }
+
+
+    public function tools_replaceurl_removequery($tmp_text){
+        $tmp_data=$this->tool_replaceurl_urlsmodified;
+    /*get all links with parameters*/    
+    /* $regex='/<a\s+href\s*=\s*"[^"]*?([^"\\?]*)(\\?[^"]*)[^"]*"(?:[^>]+)?>([^<]+)<\/a>/i';*/
+    /*get only parameteres*/
+    $regex='/[^"]*?([^"\\?]*)(\\?[^"]*)[^"]*/i';
+$tmp_store_left=array();
+$tmp_store_mod=array();
+        foreach ($tmp_data as $key => $value) {
+            
+            
+
+            if(!empty($value['old']) ){
+                
+ 
+   preg_match($regex,$value['old'], $matches);
+
+        if(!empty($matches)){
+          $tmp_store_mod[$key]['old']=$value['old'];
+            $tmp_store_mod[$key]['new']=str_replace($matches[2],'',$value['old']);
+            $tmp_text=str_replace($matches[2],'',$tmp_text);
+            
+        }else{
+          $tmp_store_left[]=$value['old'];
+          
+        }
+      
+                    
+             }else{
+                 //image does not exist.
+                    $tmp_store_mod[$key]['error']='1';
+              } 
+
+        }
+       
+        $this->tool_replaceurl_urlsmodified = $tmp_store_mod;
+        $this->tool_rplurl_curtext = $tmp_text;
+        $this->tool_replaceurl_urlsleft=$tmp_store_left;
+    }
+
     public function tools_replaceurl_removelink($tmp_text) {
       
         $opt_search = $this->tool_replaceurl_urlpath;
@@ -346,41 +458,24 @@ parse_str($opt_extra, $extra_vars);
     
     public function tools_replaceurl_removelink_process($url_old,&$tmp_text) {
         $opt_search = $this->tool_replaceurl_urlpath;
-        
-        $xml = new DOMDocument(); 
-        //$xml->loadHTML($tmp_text);
-        $xml->loadHTML(mb_convert_encoding($tmp_text, 'HTML-ENTITIES', 'UTF-8'));
+         $count=0;
+        $escapedUrl = preg_quote($url_old, '/');
 
-        $links = $xml->getElementsByTagName('a');
-        $innerHTML='';
-        $count=0;
-        
-        $flag_r=array();
-        //Loop through each <a> tags and replace them by their text content    
-        for ($i = $links->length - 1; $i >= 0; $i--) {
-            $linkNode = $links->item($i);
-            
-            $linkurl=$linkNode->getAttribute('href');
-            //$linkurl=html_entity_decode($linkurl, ENT_QUOTES, "utf-8" ); 
-            $flag_r[]=$linkurl;
-            if (strpos($linkurl,$url_old) !== false) {
-                $lnkText = $linkNode->textContent;
-                $newTxtNode = $xml->createTextNode($lnkText);
-                $linkNode->parentNode->replaceChild($newTxtNode, $linkNode);
-                $count++;
-            }
-                    
+        $regex = '/<a\s+href\s*=\s*"[^"]*?' . $escapedUrl . '[^"]*"(?:[^>]+)?>([^<]+)<\/a>/i';
+
+        preg_match($regex, $tmp_text, $matches);
+
+        if(!empty($matches)){
+            $tmp_text=preg_replace($regex, '$1', $tmp_text);
+            $count++;
+        }else{
+
+
         }
-        
-        # remove <!DOCTYPE 
-        $xml->removeChild($xml->doctype);           
 
-        # remove <html><body></body></html> 
-        $xml->replaceChild($xml->firstChild->firstChild->firstChild, $xml->firstChild);
-        
-        $tmp_text = $xml->saveHTML();
-         
-        return $count.' links removed';
+        return $count . ' links removed';
+
+       
         
         
     }
@@ -458,17 +553,85 @@ parse_str($opt_extra, $extra_vars);
         $this->tool_replaceurl_urlsmodified = $tmp_data;
         $this->tool_rplurl_curtext = $tmp_text;
     }
-    
+   
+   /**
+ * get_redirect_url()
+ * Gets the address that the provided URL redirects to,
+ * or FALSE if there's no redirect. 
+ *
+ * @param string $url
+ * @return string
+ */
+private function get_redirect_url($url){
+    $redirect_url = null; 
+
+    $url_parts = @parse_url($url);
+    if (!$url_parts) return false;
+    if (!isset($url_parts['host'])) return false; //can't process relative URLs
+    if (!isset($url_parts['path'])) $url_parts['path'] = '/';
+
+    $sock = fsockopen($url_parts['host'], (isset($url_parts['port']) ? (int)$url_parts['port'] : 80), $errno, $errstr, 30);
+    if (!$sock) return false;
+
+    $request = "HEAD " . $url_parts['path'] . (isset($url_parts['query']) ? '?'.$url_parts['query'] : '') . " HTTP/1.1\r\n"; 
+    $request .= 'Host: ' . $url_parts['host'] . "\r\n"; 
+    $request .= "Connection: Close\r\n\r\n"; 
+    fwrite($sock, $request);
+    $response = '';
+    while(!feof($sock)) $response .= fread($sock, 8192);
+    fclose($sock);
+
+    if (preg_match('/^Location: (.+?)$/m', $response, $matches)){
+        if ( substr($matches[1], 0, 1) == "/" )
+            return $url_parts['scheme'] . "://" . $url_parts['host'] . trim($matches[1]);
+        else
+            return trim($matches[1]);
+
+    } else {
+        return false;
+    }
+
+}
+
+
+/**
+ * get_all_redirects()
+ * Follows and collects all redirects, in order, for the given URL. 
+ *
+ * @param string $url
+ * @return array
+ */
+private function get_all_redirects($url){
+    $redirects = array();
+    while ($newurl = $this->get_redirect_url($url)){
+        if (in_array($newurl, $redirects)){
+            break;
+        }
+        $redirects[] = $newurl;
+        $url = $newurl;
+    }
+    return $redirects;
+}
+
+/**
+ * get_final_url()
+ * Gets the address that the URL ultimately leads to. 
+ * Returns $url itself if it isn't a redirect.
+ *
+ * @param string $url
+ * @return string
+ */
+private function get_final_url($url){
+    $redirects = $this->get_all_redirects($url);
+    if (count($redirects)>0){
+        return array_pop($redirects);
+    } else {
+        return $url;
+    }
+} 
     private function tools_replaceurl_expandShortUrl($url){
         ob_start();
-		$headers = get_headers($url,1);
-		
-		if (!empty($headers['Location'])) 
-		{
-			$headers['Location'] = (array) $headers['Location'];
-			$url = array_pop($headers['Location']);
-		}
-		$cntACmp = ob_get_contents();
+		 $url=$this->get_final_url($url);
 		ob_end_clean();
                 
                 if (filter_var($url, FILTER_VALIDATE_URL) === FALSE) {

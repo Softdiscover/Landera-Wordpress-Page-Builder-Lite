@@ -1,0 +1,106 @@
+/*header*/
+#zgpb-editor2-header{
+    background: #428bca none repeat scroll 0 0;
+    color: #fff;
+    display: block;
+    max-height: 53px;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 999999;
+    padding: 10px 0;
+}
+
+/*header options*/
+.sfdc-editor2-options{
+    display: inline-block;
+}
+.sfdc-editor2-logo{
+    float: right;
+    margin-right: 20px;
+}
+/* elements block*/
+
+.zgpb-editor2-header-icons{
+   display: block;
+    position: absolute;
+    right: 4px;
+    top: 3px;
+}
+.zgpb-editor2-header-icons .fa-times-circle{
+   font-size: 16px; 
+}
+.zgpb-editor2-header-icons .sfdc-btn-info{
+    cursor:move;
+}
+
+/*loading box*/
+/*alerts*/
+ 
+
+#zgpb-loading-box{
+    position: fixed;
+    top:0px;
+    left:50%;
+    display:block;
+    color:#ffffff;
+    
+    z-index:999999;
+}
+
+#zgpb-loading-box .sfdc-alert{
+    margin:0px;
+}
+
+#zgpb-panel-loadingst .zgpb-icon-uifm-logo-black{
+    color: #807C80;
+    font-size: 1.5em;
+}
+#zgpb-panel-loadingst{
+   background: #eeeeee none repeat scroll 0 0;
+    border: 1px solid #cccccc;
+    height: 100%;
+    left: 0;
+    opacity: 1;
+    position: fixed;
+    top: 53px;
+    width: 100%;
+    z-index: 999;
+}
+ 
+#zgpb-panel-loadingst .zgpb-loader-header-wrap{
+  position: absolute;
+  left:50%;
+  top:50%;
+  
+}
+
+.zgpb-loader-header-1{
+    background: url('../images/ajax-loader-black.gif') no-repeat 0 0 transparent;
+    display:inline-block;
+    width: 16px;
+    height: 11px;
+}
+
+
+/*some themes have the body short*/
+/*important*/
+body{
+    height: auto!important;
+    padding-top: 18px;
+    padding-right: 0px!important;
+    overflow:hidden !important;
+}
+/*avoid appear another scroll*/
+html{
+    overflow-x: hidden!important;
+  /*overflow-y: scroll!important;*/
+}
+
+/* main content*/
+#zgpb-editor-container{
+    border: 1px dashed #ccc;
+   
+    width: 100%;
+}

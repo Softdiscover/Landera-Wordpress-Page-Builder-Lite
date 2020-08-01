@@ -171,7 +171,7 @@ class Zgpbld_Fb_Controller_Backend extends Zgpbld_Base_Module {
      */ 
     public function switchbutton_style() {
         wp_register_style(
-                ZGPBLD_PREFIX . 'admin', ZGPBLD_URL . '/assets/backend/css/admin-css.css', array(), ZGPBLD_VERSION, 'all'
+                ZGPBLD_PREFIX . 'admin', ZGPBLD_URL . '/assets/backend/css/admin-css.php', array(), ZGPBLD_VERSION, 'all'
         );
         wp_enqueue_style(ZGPBLD_PREFIX . 'admin');
     }
@@ -184,10 +184,10 @@ class Zgpbld_Fb_Controller_Backend extends Zgpbld_Base_Module {
         //admin
 
         wp_register_script(
-                ZGPBLD_PREFIX . 'admin', ZGPBLD_URL . '/assets/backend/js/admin-js.js', array(), ZGPBLD_VERSION, true
+                ZGPBLD_PREFIX . 'admin', ZGPBLD_URL . '/assets/backend/js/admin-js.php', array(), ZGPBLD_VERSION, true
         );
         wp_register_style(
-                ZGPBLD_PREFIX . 'admin', ZGPBLD_URL . '/assets/backend/css/admin-css.css', array(), ZGPBLD_VERSION, 'all'
+                ZGPBLD_PREFIX . 'admin', ZGPBLD_URL . '/assets/backend/css/admin-css.php', array(), ZGPBLD_VERSION, 'all'
         );
 
             
@@ -344,10 +344,10 @@ class Zgpbld_Fb_Controller_Backend extends Zgpbld_Base_Module {
     public function load_admin_resources2() {
 
         wp_register_style(
-                ZGPBLD_PREFIX . 'admin', ZGPBLD_URL . '/assets/backend/css/admin-page-css.css', array(), ZGPBLD_VERSION, 'all'
+                ZGPBLD_PREFIX . 'admin', ZGPBLD_URL . '/assets/backend/css/admin-page-css.php', array(), ZGPBLD_VERSION, 'all'
         );
         wp_register_script(
-                ZGPBLD_PREFIX . 'admin', ZGPBLD_URL . '/assets/backend/js/page-js.js', array(), ZGPBLD_VERSION, true
+                ZGPBLD_PREFIX . 'admin', ZGPBLD_URL . '/assets/backend/js/page-js.php', array(), ZGPBLD_VERSION, true
         );
 
             

@@ -1,0 +1,164 @@
+/* buttons on backend post or page*/
+#zgpb-back-opt-menu{
+    margin:5px 0;
+    display: inline-block;
+}
+#zgpb-back-opt-menu .zgpb-back-opt-button-logo,
+#zgpb-back-opt-menu .zgpb-back-opt-button-logo:hover,
+#zgpb-back-opt-menu .zgpb-back-opt-button-logo:focus{    
+    background: #428bca!important;
+    cursor:inherit;
+    outline: none;
+    padding:5px 10px 6px 9px;
+
+}
+
+/*header*/
+#zgpb-editor1-header{
+    background: #428bca none repeat scroll 0 0;
+    color: #fff;
+    display: block;
+
+    width: 100%;
+    z-index: 999999;
+    padding: 10px 0;
+}
+
+/*header options*/
+.zgpb-editor1-options{
+    display: inline-block;
+}
+.zgpb-editor1-logo{
+    float: right;
+    margin-right: 20px;
+}
+#zgpb-editor1-container .zgpb-menu-show-palette{
+    display:inline;
+}
+
+#zgpb-editor1-body{
+    min-height: 371px;
+    background: #ededed;
+    border: 1px solid #e5e5e5;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+    width:100%;
+    min-width: 255px;
+    float:left;
+    position: relative;
+    z-index:0;
+}
+
+.zgpb-editor1-body-left{
+    background:#ededed;
+    float: left;
+
+    min-height: 157px;
+}
+.zgpb-editor1-body-main{
+    float: right;
+    min-height: 100px;
+    background:#fff;
+}
+
+.zgpb-editor1-body-main-inner{
+    padding: 10px;
+}
+
+/*admin palette*/
+#zgpb-admin-palette{
+    background: #eee;
+    border: 1px solid #ccc;
+    display: block;
+    margin: 10px;
+}
+#zgpb-admin-palette-header{
+    background: #87bbd2 none repeat scroll 0 0;
+    color: #fff;
+    font-weight: bold;
+    margin-bottom: 5px;
+    padding: 5px;
+    position: relative;
+}
+#zgpb-admin-palette-body{}
+#zgpb-admin-palette-footer{}
+
+.zgpb-editor1-header-icons{
+    display: block;
+    position: absolute;
+    right: 4px;
+    top: 3px;
+}
+.zgpb-editor1-header-icons .fa-times-circle{
+    font-size: 16px; 
+}
+
+/*dialog palette*/
+.ui-dialog .ui-dialog-titlebar-close{
+    right:7px;
+}
+
+.zgpb-editor1-header-icons .sfdc-btn-info{
+    cursor: move;
+}
+
+/*loading box*/
+/*alerts*/
+#zgpb-loading-box{
+    position: fixed;
+    top:0px;
+    left:50%;
+    display:block;
+    color:#ffffff;
+
+    z-index:999999;
+}
+
+#zgpb-loading-box .sfdc-alert{
+    margin:0px;
+}
+
+#zgpb-panel-loadingst .zgpb-icon-uifm-logo-black{
+    color: #807C80;
+    font-size: 1.5em;
+}
+#zgpb-panel-loadingst{
+    background: #eeeeee none repeat scroll 0 0;
+    border: 1px solid #cccccc;
+    height: 100%;
+    left: 0;
+    opacity: 0.9;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 9999;
+}
+
+#zgpb-panel-loadingst .zgpb-loader-header-wrap{
+    position: absolute;
+    left:50%;
+    top:50%;
+
+}
+
+.zgpb-loader-header-1{
+    background: url('../images/ajax-loader-black.gif') no-repeat 0 0 transparent;
+    display:inline-block;
+    width: 16px;
+    height: 11px;
+}
+
+/*live editor*/
+#zgpb-editor-container{
+    border: 1px dashed #ccc;
+    padding: 10px 0;
+    width: 100%;
+}
+/*modal sfdc*/
+body.sfdc-modal-open {
+    overflow: visible;
+}
+
+/*image*/
+#zgpb-editor-container img{
+    width: 100%;
+}
